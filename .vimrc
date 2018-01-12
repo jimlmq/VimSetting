@@ -37,6 +37,8 @@ Plugin 'davits/YouCompleteMe'
 Plugin 'jimlmq/dyevim', {'name': 'mydyevim'}
 "Plugin 'Valloric/ListToggle'
 
+Plugin 'vim-scripts/a.vim'
+
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
 " Git plugin not hosted on GitHub
@@ -339,7 +341,7 @@ nnoremap <leader>sd :cs find d <C-R>=expand("<cword>")<CR><CR>
 "}}}
 
 "-----------------ctags-------------{{{
-set tags+=tags
+let &tags .= ',' . expand("%:p:h") . '/tags'
 "}}}
 
 "----------------airline-------------{{{

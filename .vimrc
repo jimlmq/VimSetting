@@ -1,4 +1,5 @@
 "===================插件管理====================== {{{
+"git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -38,6 +39,12 @@ Plugin 'jimlmq/dyevim', {'name': 'mydyevim'}
 "Plugin 'Valloric/ListToggle'
 
 Plugin 'vim-scripts/a.vim'
+"Plugin 'tbastos/vim-lua'
+
+"Plugin 'mileszs/ack.vim'
+Plugin 'rking/ag.vim'
+
+Plugin 'suan/vim-instant-markdown'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
@@ -122,6 +129,12 @@ set laststatus=2 " 显示状态栏 (默认值为 1, 无法显示状态栏)
 " set foldclose=all " 设置为自动关闭折叠 
 " nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 " 用空格键来开关折叠
+
+"if executable('ag')
+"	" Use Ag over Grep
+"	let &grepprg = 'ag\ --vimgrep\ --cpp\ $*\ ' . expand("%:p:h")
+"	"set grepformat=%f:%l:%c:%m
+"endif
 
 augroup jimlong
 	autocmd!
@@ -400,6 +413,12 @@ let g:cpp_concepts_highlight = 1
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o,*.d,*.a,*.meta,*.apk
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_buftag_ctags_bin = '/usr/bin/ctags'
+if executable('ag')
+	" Use ag in CtrlP for listing files.
+	"let g:ctrlp_user_command = 'ag %s -l --nocolor -g "'
+	" Ag is fast enough that CtrlP doesn't need to cache
+	"let g:ctrlp_use_caching = 0
+endif
 "}}}
 
 "------------solarized--------------{{{
@@ -408,5 +427,19 @@ let g:solarized_termcolors=256
 
 "------------dyevim--------------{{{
 let g:dyevim_timeout=20
+"}}}
+
+"------------ack--------------{{{
+if executable('ag')
+	let g:ackprg = 'ag --vimgrep'
+endif
+"}}}
+
+"------------ag--------------{{{
+let g:ag_prg="ag --cpp --lua --vimgrep"
+let g:ag_format="%f:%l:%m"
+let g:ag_working_path_mode="r"
+
+nnoremap <leader>a :Ag <C-R>=expand("<cword>")<CR><CR>
 "}}}
 

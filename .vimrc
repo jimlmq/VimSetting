@@ -24,7 +24,7 @@ Plugin 'The-NERD-tree'
 Plugin 'indentLine.vim'
 Plugin 'delimitMate.vim'
 "Plugin 'wincent/command-t'
-"Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'kien/ctrlp.vim'
 Plugin 'spin6lock/vim_sproto'
 "Plugin 'jeaye/color_coded'
@@ -32,10 +32,10 @@ Plugin 'rdnetto/YCM-Generator'
 Plugin 'morhetz/gruvbox'
 "Plugin 'altercation/vim-colors-solarized'
 
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'davits/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
+"Plugin 'davits/YouCompleteMe', {'name': 'davits_YouCompleteMe'}
 "Plugin 'davits/dyevim'
-Plugin 'jimlmq/dyevim', {'name': 'mydyevim'}
+"Plugin 'jimlmq/dyevim', {'name': 'mydyevim'}
 "Plugin 'Valloric/ListToggle'
 
 Plugin 'vim-scripts/a.vim'
@@ -45,6 +45,9 @@ Plugin 'vim-scripts/a.vim'
 Plugin 'rking/ag.vim'
 
 Plugin 'suan/vim-instant-markdown'
+"Plugin 'shougo/vimshell.vim'
+"Plugin 'vim-scripts/Conque-Shell'
+Plugin 'jceb/vim-orgmode'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
@@ -288,6 +291,14 @@ inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+function! CleverTab()
+	if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+		return "\<Tab>"
+	else
+		return "\<C-N>"
+	endif
+endfunction
+inoremap <Tab> <C-R>=CleverTab()<CR>
 
 "youcompleteme  默认tab  s-tab 和自动补全冲突
 "let g:ycm_key_list_select_completion=['<c-n>']
@@ -312,6 +323,7 @@ let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
 "注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
+"let g:ycm_server_python_interpreter = 'python3'
 
 let g:ycm_error_symbol = '>>'
 let g:ycm_warning_symbol = '>*'
@@ -413,11 +425,12 @@ let g:cpp_concepts_highlight = 1
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o,*.d,*.a,*.meta,*.apk
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_buftag_ctags_bin = '/usr/bin/ctags'
+let g:ctrlp_root_markers = ['cscope.sh']
 if executable('ag')
 	" Use ag in CtrlP for listing files.
-	"let g:ctrlp_user_command = 'ag %s -l --nocolor -g "'
+	let g:ctrlp_user_command = 'ag %s -l --nocolor -g "" | grep -vE ".*\.(so|swp|zip|o|d|a|meta|apk|tgz)$|world_include|world_lib|world_srv|cross_include|cross_lib|cross_srv"'
 	" Ag is fast enough that CtrlP doesn't need to cache
-	"let g:ctrlp_use_caching = 0
+	let g:ctrlp_use_caching = 0
 endif
 "}}}
 
